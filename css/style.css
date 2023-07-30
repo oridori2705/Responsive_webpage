@@ -75,6 +75,53 @@ header {
   cursor: pointer;
 }
 
+/*배너 섹션*/
+section {
+  width: 100%;
+  background-color: #fff;
+  position: relative;
+}
+
+.main {
+  height: 360px; /* 화면 이미지 고정 */
+  background-image: url("../img/banner.jpeg");
+  background-size: cover;
+  background-position: center 40%; /* 이미지 위치를 살짝 위로 올리기 위한 position 설정 */
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+/* 배경 이미지에 색상을 어둡게 하기 위해, 어두운 색상으로 이미지 상위에 투명도를 주어 덮어씌움 */
+.main-container {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(47, 48, 89);
+  opacity: 0.8;
+  z-index: 2;
+  margin-top: 60px; /* position 이 fixed 일 경우, 문서 흐름에서 빠지므로, 이 부분은 margin 으로 적용 */
+}
+
+/*배너 안의 메시지가 가운데로 오게하기 위해*/
+.title-container {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 0.8rem;
+}
+
+.message {
+  font-size: 1.4rem;
+  font-weight: normal;
+  color: #fff;
+  line-height: 2rem;
+}
+
+
 @media only screen and (min-width: 1200px) {
   .inner {
     max-width: 1200px;
