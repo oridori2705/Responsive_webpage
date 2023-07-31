@@ -230,7 +230,7 @@ section {
   list-style: none;
   padding: 1rem 0;
   margin: 0;
-  overflow: hidden;
+  overflow: hidden; /**/
 }
 
 .class-card {
@@ -242,7 +242,9 @@ section {
   border-radius: 8px;
   margin: 0 10px;
   transition: 0.4s;
-  /* IE11 에서는 flex 설정시, 디폴트로 flex 아이템들에 고정 너비를 무시 */
+  /* IE11 에서는 flex 설정시, 디폴트로 flex 아이템들에 고정 너비를 무시 
+  flex-shrink를 따로 설정해줘야 IE11에서는 정학하게 작동함
+  */
   flex-shrink: 0;
 }
 
