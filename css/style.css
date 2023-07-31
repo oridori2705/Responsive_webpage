@@ -142,7 +142,6 @@ section {
      offset-x | offset-y | blur-radius | spread-radius | color */
   box-shadow: 10px 10px 10px -5px rgba(25, 42, 70, 0.2);
 }
-
 .skill-icon {
   font-size: 2.5rem;
   margin: 0 10px;
@@ -179,6 +178,144 @@ section {
 
 .vue-style {
   color: #2e7d32;
+}
+
+/*강의 카드 리스트 제목 부분*/
+.roadmap-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #545e6f;
+}
+
+.arrow-container {
+  display: flex;
+}
+.maintitle {
+  font-weight: bold;
+  margin-bottom: 0.2em;
+  color: #545e6f;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  margin: 0;
+  color: #545e6f;
+  line-height: 1.4em;
+}
+
+.section-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-top: 2rem;
+}
+
+.section-title-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  margin: 0;
+}
+
+.roadmap-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #545e6f;
+}
+
+/*슬라이드 버튼*/
+.slide-prev {
+  font-size: 2em;
+  cursor: pointer;
+  color: rgb(47, 48, 89);
+  margin: 0;
+}
+.slide-next {
+  font-size: 2em;
+  cursor: pointer;
+  color: #cfd8dc;
+  margin: 0;
+}
+
+/* 강의 카드 css */
+.class-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  overflow: none; /* overflow 를 hidden 으로 설정하면, transform 시 이미지 짤림 */
+  margin-top: 0;
+}
+.class-card {
+  width: 240px; /* 카드는 고정크기로 줘야 이쁨*/
+  min-width: 240px;
+  /* box-shadow: 블럭에 그림자를 적용하는 CSS 기능
+     https://developer.mozilla.org/ko/docs/Web/CSS/box-shadow 
+     offset-x | offset-y | blur-radius | spread-radius | color */
+  box-shadow: 10px 10px 10px -5px rgba(25, 42, 70, 0.2);
+
+  transition: 0.3s;
+  border-radius: 8px;
+  margin: 10px 10px;
+  touch-action: pan-x;
+}
+
+.class-card:hover {
+  box-shadow: -20px 20px 28px -10px rgba(25, 42, 70, 0.13);
+}
+
+.class-container {
+  padding: 0.5em 1em 1em 1em;
+}
+
+.class-container-skill {
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  margin: 0 0 1em 0;
+}
+
+.class-container-skill-text {
+  font-size: 0.9em;
+  color: #949393;
+  padding: 0.2em 0;
+}
+
+.class-container-skill-level {
+  font-size: 0.9em;
+  color: white;
+  background-color: #0d47a1;
+  padding: 0.2em;
+}
+
+img {
+  border-radius: 8px 8px 0 0;
+  height: 150px;
+}
+
+.class-maintitle {
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  color: #545e6f;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden; /* "visible" 외의 값으로 설정 */
+  text-overflow: ellipsis;
+}
+
+.class-subtitle {
+  font-size: 0.9rem;
+  margin: 0;
+  color: #545e6f;
+  line-height: 1.5em;
+  word-wrap: break-word;
+  word-break: keep-all;
+}
+
+.roadmap-desc {
+  display: visible;
 }
 
 @media only screen and (min-width: 1200px) {
