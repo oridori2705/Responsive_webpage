@@ -350,6 +350,7 @@ footer {
   background-color: #0d47a1;
   width: 40px;
   height: 40px;
+  /*수평에서 가운데*/
   text-align: center;
 
   border-radius: 20px;
@@ -369,6 +370,10 @@ footer {
   2. content: "폰트어썸 유니코드" 를 넣고, (사이트에 들어가서 코드옆에 짧게 영문과숫자가 있음)
   3. font-family: FontAwesome 이라고 넣으면 됨
   */
+/* 
+  after을 사용했지만 backtotop요소가 fixed이므로 문서의 흐름에서 벗어났다.
+  그래서 아래 content가 요소 뒤에 나오는 것이아닌 요소 위에 나타나게 되는 것이다.
+*/
 #backtotop::after {
   content: "\f077";
   font-family: FontAwesome;
@@ -377,11 +382,15 @@ footer {
   line-height: 40px;
   color: #fff;
 }
-
+/*아래 클래스를 추가하면 나타남*/
 #backtotop.show {
   opacity: 1;
   visibility: visible;
   background-color: rgb(47, 48, 49);
+}
+#backtotop.show:hover {
+  cursor: pointer;
+  background-color: #2186c4;
 }
 
 @media only screen and (min-width: 1200px) {
