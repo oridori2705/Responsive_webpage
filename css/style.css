@@ -45,7 +45,7 @@ header {
   width: 100%;
   height: 60px;
   background-color: #fff;
-  position: fixed;
+  position: fixed; /*헤더가 화면 위에 고정되도록*/
   top: 0;
   left: 0;
   z-index: 1000;
@@ -92,7 +92,7 @@ section {
   background-image: url("https://www.fun-coding.org/assets_lms/images/photodune-4161018-group-of-students-m.jpg");
   background-size: cover;
   background-position: center 10%; /* 이미지 위치를 살짝 위로 올리기 위한 position 설정 */
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; /*이미지가 작으면 반복되어 보여짐*/
   z-index: 1;
 }
 
@@ -230,7 +230,7 @@ section {
   list-style: none;
   padding: 1rem 0;
   margin: 0;
-  overflow: hidden; /**/
+  overflow: hidden; /*강의 카드가 많으면 넘쳐보이지 않도록 자름*/
 }
 
 .class-card {
@@ -270,6 +270,9 @@ section {
 .class-skill {
   display: flex;
   justify-content: space-between;
+  /*align-content로 설정하면 자식인 두 요소가 서로 맞지 않게 된다
+  align-items를 써서 flex 아이템들을 한 요소로 보게 끔해야한다.
+  */
   align-items: center;
 }
 
@@ -294,8 +297,10 @@ section {
   font-weight: bold;
   color: #545e6f;
   width: 100%;
+  /*강의 카드안의 제목이 길다면 자르고*/
   white-space: nowrap;
   overflow: hidden;
+  /* ...으로 표현되게함*/
   text-overflow: ellipsis;
   margin-bottom: 0.5rem;
 }
@@ -306,10 +311,13 @@ section {
   line-height: 1.5rem;
 }
 
+/*강의 리스트 제목이 너무 길면 화면이 작아질 때 두 줄로 표현된다
+이를 위해 텍스트를 부분적으로 안보이게해서 반응형으로 만든다.
+*/
 .roadmap-desc {
   display: visible;
 }
-
+/*리스트에 마우스를 올렸을 때 커서모양이 나오게끔함*/
 li a:hover {
   cursor: pointer;
 }
@@ -335,6 +343,45 @@ footer {
 .footer-copyright {
   color: #545e6f;
   margin: 1rem 0.5rem;
+}
+
+/*백투탑*/
+#backtotop {
+  background-color: #0d47a1;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+
+  border-radius: 20px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  /*각 프로퍼티마다 duration을 다르게 주는 방법*/
+  transition-property: background-color, opacity, visibility;
+  transition-duration: 0.3s, 0.5s, 0.5s;
+
+  opacity: 0;
+  visibility: hidden;
+  z-index: 999;
+}
+/* 아이콘 적용 방법
+  1. ::after (요소 뒤에 content 추가) 가상 요소에서,
+  2. content: "폰트어썸 유니코드" 를 넣고, (사이트에 들어가서 코드옆에 짧게 영문과숫자가 있음)
+  3. font-family: FontAwesome 이라고 넣으면 됨
+  */
+#backtotop::after {
+  content: "\f077";
+  font-family: FontAwesome;
+  font-size: 1.5rem;
+  /*line-heigtht는 line-height값을 heigth값과 동일하게하면 텍스트 요소가 중간에 오게된다.*/
+  line-height: 40px;
+  color: #fff;
+}
+
+#backtotop.show {
+  opacity: 1;
+  visibility: visible;
+  background-color: rgb(47, 48, 49);
 }
 
 @media only screen and (min-width: 1200px) {
