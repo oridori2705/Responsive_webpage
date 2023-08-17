@@ -221,6 +221,17 @@ section {
   color: #cfd8dc;
 }
 
+/*왼쪽 오른쪽 슬라이드 버튼이 활성화 된다면 hover기능 추가*/
+.slide-prev-hover:hover {
+  transition: transform 0.5s;
+  transform: translateX(-2px);
+}
+
+.slide-next-hover:hover {
+  transition: transform 0.5s;
+  transform: translateX(2px);
+}
+
 .arrow-container {
   display: flex;
 }
@@ -230,7 +241,7 @@ section {
   list-style: none;
   padding: 1rem 0;
   margin: 0;
-  overflow: hidden; /*강의 카드가 많으면 넘쳐보이지 않도록 자름*/
+  overflow: none; /* overflow 를 hidden 으로 설정하면, transform 시 이미지 짤림 */
 }
 
 .class-card {
