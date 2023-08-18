@@ -28,6 +28,36 @@ window.addEventListener("scroll", checkScroll);
 backToTop.addEventListener("click", moveBackToTop);
 
 /*----------------------------------------------------------------------*/
+function transformNext(event) {
+  const slideNext = event.target;
+  const slidePrev = slideNext.previousElementSibling;
+
+  const classList = slideNext.parentElement.parentElement.nextElementSibling;
+  let activeLi = classList.getAttribute("data-position");
+  const liList = classList.getElementsByTagName("li");
+
+  // 하나의 카드라도 왼쪽으로 이동했다면, 오른쪽으로 갈 수 있음
+  if (Number(activeLi) < 0) {
+    activeLi = Number(activeLi) + 260;
+
+    // 왼쪽에 있던 카드가 오른쪽으로 갔다면, 다시 왼쪽으로 갈 수 있으므로 PREV 버튼 활성화
+    slidePrev.style.color = "#2f3059";
+    slidePrev.classList.add("slide-prev-hover");
+    slidePrev.addEventListener("click", transformPrev);
+
+    // 맨 왼쪽에 현재 보이는 카드가, 맨 첫번째 카드라면, 오른쪽 즉, NEXT 로 갈 수 없으므로 NEXT 버튼 비활성화
+    if (Number(activeLi) === 0) {
+      slideNext.style.color = "#cfd8dc";
+      slideNext.classList.remove("slide-next-hover");
+      slideNext.removeEventListener("click", transformNext);
+    }
+  }
+
+  classList.style.transition = "transform 1s";
+  classList.style.transform = "translateX(" + String(activeLi) + "px)";
+  classList.setAttribute("data-position", activeLi);
+}
+
 function transformPrev(event) {
   //event.target : 현재 클릭한 왼쪽 슬라이드버튼요소
   const slidePrev = event.target;
@@ -65,10 +95,12 @@ function transformPrev(event) {
       //더이상 왼쪽으로 갈 수 가 없음 -> 왼쪽 버튼 비활성화
       slidePrev.style.color = "#cfd8dc";
       slidePrev.classList.remove("slide-prev-hover");
+      slidePrev.removeEventListener("click", transformPrev);
     }
     //오른쪽버튼을 활성화 -> 왼쪽버튼을 눌러서 슬라이드가 왼쪽으로 밀렸다면 무조건 오른쪽버튼은 활성화되야된다.
     slideNext.style.color = "#2f3059";
     slideNext.classList.add("slide-next-hover");
+    slideNext.addEventListener("click", transformNext);
   }
 
   //ul자체를 activeLi값만큼 이동함 ->data-position
