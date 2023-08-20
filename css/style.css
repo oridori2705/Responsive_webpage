@@ -89,9 +89,9 @@ section {
 
 .main {
   height: 360px; /* 화면 이미지 고정 */
-  background-image: url("https://www.fun-coding.org/assets_lms/images/photodune-4161018-group-of-students-m.jpg");
+  background-image: url("/img/banner.jpeg");
   background-size: cover;
-  background-position: center 10%; /* 이미지 위치를 살짝 위로 올리기 위한 position 설정 */
+  background-position: center 20%; /* 이미지 위치를 살짝 위로 올리기 위한 position 설정 */
   background-repeat: no-repeat; /*이미지가 작으면 반복되어 보여짐*/
   z-index: 1;
 }
