@@ -1,3 +1,6 @@
+//최상단으로 바로가기 버튼 기능
+/*----------------------------------------------------------------------*/
+
 const backToTop = document.getElementById("backtotop");
 
 function checkScroll() {
@@ -27,6 +30,7 @@ function moveBackToTop() {
 window.addEventListener("scroll", checkScroll);
 backToTop.addEventListener("click", moveBackToTop);
 
+//버튼 슬라이드 기능
 /*----------------------------------------------------------------------*/
 function transformNext(event) {
   const slideNext = event.target;
@@ -135,4 +139,112 @@ for (let i = 0; i < slidePrevList.length; i++) {
     arrowContainer.removeChild(slidePrevList[i].nextElementSibling);
     arrowContainer.removeChild(slidePrevList[i]);
   }
+}
+
+//마우스 드래그 슬라이드 기능
+/*---------------------------------------------------------------------*/
+
+let touchstartX;
+let currentClassList;
+let currentImg;
+let currentActiveLi;
+let nowActiveLi;
+let mouseStart;
+
+function processTouchMove(event) {
+  // preventDefault() : 해당 요소의 고유의 동작을 중단시키는 함수 (이미지만 드레그로 이동하는 고유 동작 중단)
+  event.preventDefault();
+
+  // currentActiveLi: class-list 에서 data-position 으로 현재 카드 위치를 알아냄
+  // touchstartX: 최초 요소의 x 좌표값
+  // event.clientX: 드래그 중인 현재의 마우스 좌표값
+  // 즉, (Number(event.clientX) - Number(touchstartX)) 는 마우스가 얼만큼 이동중인지를 나타냄
+  let currentX = event.clientX || event.touches[0].screenX;
+  nowActiveLi =
+    Number(currentActiveLi) + (Number(currentX) - Number(touchstartX));
+  // 바로 즉시 마우스 위치에 따라, 카드를 이동함
+  currentClassList.style.transition = "transform 0s linear";
+  currentClassList.style.transform =
+    "translateX(" + String(nowActiveLi) + "px)";
+}
+
+function processTouchStart(event) {
+  mouseStart = true;
+
+  // preventDefault() : 해당 요소의 고유의 동작을 중단시키는 함수 (이미지만 드레그로 이동하는 고유 동작 중단)
+  event.preventDefault();
+  touchstartX = event.clientX || event.touches[0].screenX;
+  currentImg = event.target;
+
+  // 드래그 처리를 위해, 드래그 중(mousemove), 드래그가 끝났을 때(mouseup) 에 이벤트를 걸어줌
+  currentImg.addEventListener("mousemove", processTouchMove);
+  currentImg.addEventListener("mouseup", processTouchEnd);
+  //----모바일을 위해서 따로해줘야함----
+  currentImg.addEventListener("touchmove", processTouchMove);
+  currentImg.addEventListener("touchend", processTouchEnd);
+
+  currentClassList = currentImg.parentElement.parentElement;
+  currentActiveLi = currentClassList.getAttribute("data-position");
+}
+
+function processTouchEnd(event) {
+  // preventDefault() : 해당 요소의 고유의 동작을 중단시키는 함수 (이미지만 드레그로 이동하는 고유 동작 중단)
+  event.preventDefault();
+
+  //마우스가 드래그 중일 때만
+  if (mouseStart === true) {
+    //이벤트를 삭제해줌으로써 드래그가 끝남
+    currentImg.removeEventListener("mousemove", processTouchMove);
+    currentImg.removeEventListener("mouseup", processTouchEnd);
+    //----모바일을 위해서 따로 해줘야함----
+    currentImg.removeEventListener("touchmove", processTouchMove);
+    currentImg.removeEventListener("touchend", processTouchEnd);
+
+    //드래그를 너무 많이 했을 때를 방지하기위해 드래그가 끝나면 맨 처음 상태로 돌려놈
+    // 맨 처음 카드가 맨 앞에 배치되도록 초기 상태로 이동
+    currentClassList.style.transition = "transform 1s ease";
+    currentClassList.style.transform = "translateX(0px)";
+    currentClassList.setAttribute("data-position", 0);
+
+    // 만약 버튼을 눌러서 슬라이드를 하고 드래그를 하고나면 맨 처음상태로 오게되는데 이때 버튼의 상태가 꼬이게 된다.
+    // 맨 처음 카드가 맨 앞에 배치된 상태로 화살표 버튼도 초기 상태로 변경
+    // 드래그 한 카드 리스트의 슬라이드 버튼 prev와 next버튼을 가져옴
+    let eachSlidePrev =
+      currentClassList.previousElementSibling.children[1].children[0];
+    let eachSlideNext =
+      currentClassList.previousElementSibling.children[1].children[1];
+    //현재 드래그한 카드리스트 데이터들을 가져옴
+    let eachLiList = currentClassList.getElementsByTagName("li");
+
+    // eachLiList.length * 260 : 카드 리스트의 전체 너비
+    // currentClassList.clientWidth : 화면에 표시되는 너비
+    // currentClassList.clientWidth < eachLiList.length * 260 : 즉 카드 리스트가 많아서 넘친다는 뜻
+    if (currentClassList.clientWidth < eachLiList.length * 260) {
+      //넘친다는 거니까 prev버튼은 활성화해주고
+      eachSlidePrev.style.color = "#2f3059";
+      eachSlidePrev.classList.add("slide-prev-hover");
+      eachSlidePrev.addEventListener("click", transformPrev);
+      //next버튼은 비활성화한다.
+      eachSlideNext.style.color = "#cfd8dc";
+      eachSlideNext.classList.remove("slide-next-hover");
+      eachSlideNext.removeEventListener("click", transformNext);
+
+      //즉 초기상태로 되돌린다는 뜻이다.
+    }
+    //드래그 처리가 다 끝났다는 의미로 mouseStart를 false한다.
+    mouseStart = false;
+  }
+}
+
+// 특정 요소를 드래그하다가, 요소 밖에서 드래그를 끝낼 수 있으므로, window 에 이벤트를 걸어줌
+window.addEventListener("dragend", processTouchEnd);
+window.addEventListener("mouseup", processTouchEnd);
+
+// 인터페이스간의 오동작을 막기 위해, 카드 내의 이미지에만 드래그 인터페이스를 제공하기로 함
+const classImgLists = document.querySelectorAll("ul li img");
+for (let i = 0; i < classImgLists.length; i++) {
+  // 해당 요소에 마우스를 누르면, 드래그를 시작할 수 있으므로, 이벤트를 걸어줌
+  classImgLists[i].addEventListener("mousedown", processTouchStart);
+  //----모바일을 위해서 따로 해줘야함----
+  classImgLists[i].addEventListener("touchstart", processTouchStart);
 }
